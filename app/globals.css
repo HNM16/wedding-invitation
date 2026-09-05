@@ -1,0 +1,477 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SOLITUDE — Elegant Editorial Font (rautanstudio)
+   ───────────────────────────────────────────────────────────────────────────
+   Solitude is a commercial licensed typeface and is not bundled with this
+   repository. To activate it:
+
+     1. Place the licensed web files at:
+          public/fonts/Solitude.woff2
+          public/fonts/Solitude.woff   (optional fallback)
+     2. Uncomment the @font-face block below.
+
+   Until then the site renders in Cormorant Garamond, an editorial serif with
+   full Cyrillic + Cyrillic-Ext coverage (needed for Tajik ғ ӣ қ ӯ ҳ ҷ).
+   Nothing else needs to change — "Solitude" already sits first in the display
+   stack, and an undeclared family is simply skipped by the browser, so no
+   network request is made while the files are absent.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*
+@font-face {
+  font-family: "Solitude";
+  src:
+    url("/fonts/Solitude.woff2") format("woff2"),
+    url("/fonts/Solitude.woff") format("woff");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Ground: deep warm blacks & espresso ──────────────────────────────── */
+  --color-noir: #090705;
+  --color-obsidian: #0d0a07;
+  --color-espresso: #17110c;
+  --color-cocoa: #241a12;
+  --color-bark: #35271b;
+
+  /* ── Metal: antique gold, never bright yellow ─────────────────────────── */
+  --color-gold-deep: #8a6a32;
+  --color-gold: #c2a05c;
+  --color-gold-soft: #d8be86;
+  --color-champagne: #ebd9b4;
+
+  /* ── Paper: warm ivory & sand ─────────────────────────────────────────── */
+  --color-ivory: #f3ebdd;
+  --color-sand: #c9b99f;
+  --color-mute: #93866f;
+
+  /* ── Type ─────────────────────────────────────────────────────────────── */
+  --font-display: "Solitude", var(--font-cormorant), "Cormorant Garamond",
+    "Times New Roman", serif;
+  --font-body: var(--font-commissioner), ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+
+  /* ── Motion: slow, editorial easing ───────────────────────────────────── */
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-veil: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  html {
+    /* `clip` (not `hidden`) prevents horizontal overflow without breaking
+       position: sticky inside the document. */
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: clip;
+    background-color: var(--color-noir);
+    color: var(--color-sand);
+    font-family: var(--font-body);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Avoids the iOS rubber-band flash of white behind the fixed layers. */
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold) 30%, transparent);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--color-gold) 75%, transparent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* Slim gold scrollbar (progressive enhancement only). */
+  @supports (scrollbar-color: auto) {
+    html {
+      scrollbar-color: var(--color-bark) var(--color-noir);
+      scrollbar-width: thin;
+    }
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* iOS zooms the page when a focused field is under 16px. */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EDITORIAL UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+  /* ── Real metallic gold: a multi-stop gradient clipped to the glyphs, with
+        a faint bloom so it reads as lit metal rather than flat yellow. ───── */
+  .gold-leaf {
+    background-image: linear-gradient(
+      104deg,
+      #8a6a32 0%,
+      #b8934f 14%,
+      #f0dfb6 30%,
+      #d8be86 44%,
+      #9c7838 58%,
+      #e7d3a9 76%,
+      #b8934f 88%,
+      #8a6a32 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 1px 14px rgba(194, 160, 92, 0.16));
+  }
+
+  /* Slightly cooler, quieter gold for small type where the bloom would blur. */
+  .gold-leaf-fine {
+    background-image: linear-gradient(
+      100deg,
+      #9c7838 0%,
+      #d8be86 38%,
+      #f0dfb6 52%,
+      #c2a05c 74%,
+      #9c7838 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ── Section label: tiny, wide-tracked, champagne ─────────────────────── */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: clamp(0.5625rem, 0.5rem + 0.3vw, 0.6875rem);
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-champagne) 62%, transparent);
+  }
+
+  /* ── Editorial display heading ────────────────────────────────────────── */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Hairline rules ───────────────────────────────────────────────────── */
+  .hairline {
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-gold) 45%, transparent) 50%,
+      transparent
+    );
+  }
+
+  .hairline-v {
+    width: 1px;
+    background-image: linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in srgb, var(--color-gold) 38%, transparent) 50%,
+      transparent
+    );
+  }
+
+  /* ── Photographic frame: a hairline inset that reads as printed matter ── */
+  .plate {
+    position: relative;
+    background-color: var(--color-obsidian);
+    box-shadow:
+      0 1px 0 0 color-mix(in srgb, var(--color-gold) 12%, transparent) inset,
+      0 40px 90px -40px rgba(0, 0, 0, 0.9);
+  }
+
+  .plate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--color-gold) 14%, transparent);
+  }
+
+  /* ── Film grain: one fixed layer over the whole document ──────────────── */
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    /* Above the page, below the fixed chrome (z-50) and the veil (z-90). */
+    z-index: 40;
+    pointer-events: none;
+    opacity: 0.055;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+  }
+
+  /* ── Cinematic vignette ───────────────────────────────────────────────── */
+  .vignette::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        120% 85% at 50% 45%,
+        transparent 40%,
+        rgba(4, 3, 2, 0.55) 100%
+      );
+  }
+
+  /* ── Buttons ──────────────────────────────────────────────────────────── */
+  .btn-gold {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 1rem 2.25rem;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-champagne);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-gold) 13%, transparent),
+      color-mix(in srgb, var(--color-gold-deep) 6%, transparent)
+    );
+    border: 1px solid color-mix(in srgb, var(--color-gold) 34%, transparent);
+    overflow: hidden;
+    transition:
+      color 0.6s var(--ease-editorial),
+      border-color 0.6s var(--ease-editorial),
+      box-shadow 0.6s var(--ease-editorial);
+  }
+
+  /* A single gold sheen that sweeps across on hover — no repaint at rest. */
+  .btn-gold::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-101%);
+    background-image: linear-gradient(
+      100deg,
+      transparent,
+      color-mix(in srgb, var(--color-champagne) 22%, transparent),
+      transparent
+    );
+    transition: transform 1.1s var(--ease-editorial);
+  }
+
+  .btn-gold > * {
+    position: relative;
+  }
+
+  @media (hover: hover) {
+    .btn-gold:hover {
+      color: var(--color-ivory);
+      border-color: color-mix(in srgb, var(--color-gold) 62%, transparent);
+      box-shadow: 0 0 40px -12px rgba(194, 160, 92, 0.45);
+    }
+
+    .btn-gold:hover::before {
+      transform: translateX(101%);
+    }
+  }
+
+  .btn-gold:active {
+    transform: translateY(1px);
+  }
+
+  /* ── Form fields ──────────────────────────────────────────────────────── */
+  .field {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.9rem 1rem;
+    color: var(--color-ivory);
+    background-color: color-mix(in srgb, var(--color-espresso) 55%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-gold) 16%, transparent);
+    border-radius: 2px;
+    font-weight: 300;
+    transition:
+      border-color 0.45s var(--ease-editorial),
+      background-color 0.45s var(--ease-editorial);
+  }
+
+  .field::placeholder {
+    color: color-mix(in srgb, var(--color-mute) 75%, transparent);
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: color-mix(in srgb, var(--color-gold) 55%, transparent);
+    background-color: color-mix(in srgb, var(--color-espresso) 80%, transparent);
+  }
+
+  .field[aria-invalid="true"] {
+    border-color: color-mix(in srgb, #b4573f 65%, transparent);
+  }
+
+  /* ── Balanced editorial measure ───────────────────────────────────────── */
+  .measure {
+    max-width: 34rem;
+    text-wrap: pretty;
+  }
+
+  .balance {
+    text-wrap: balance;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ATMOSPHERE — long, cheap, transform/opacity-only ambience
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(5%, 4%, 0) scale(1.14);
+    opacity: 0.78;
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate3d(3%, 3%, 0) scale(1.08);
+    opacity: 0.42;
+  }
+  50% {
+    transform: translate3d(-5%, -3%, 0) scale(0.94);
+    opacity: 0.68;
+  }
+}
+
+@keyframes ember {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--ember-peak, 0.5);
+  }
+  88% {
+    opacity: var(--ember-peak, 0.5);
+  }
+  100% {
+    transform: translate3d(var(--ember-x, 14px), -110px, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+  }
+  35% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 1;
+  }
+  70% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    opacity: 0;
+  }
+}
+
+@keyframes ken-burns {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.16) translate3d(0, -1.5%, 0);
+  }
+}
+
+@keyframes eq-bar {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION — honour the system preference everywhere
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
