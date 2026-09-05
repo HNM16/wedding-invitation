@@ -1,0 +1,3 @@
+Place the licensed "Solitude" web font files here:
+  Solitude.woff2  (and optionally Solitude.woff)
+Then uncomment the @font-face block at the top of app/globals.css.
