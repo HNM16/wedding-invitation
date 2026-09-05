@@ -3,6 +3,10 @@
 A premium digital wedding invitation for **Sino & Sayora**
 19 September 2026 · 17:30 · Yakassaroy Grand Hall (Plof Centre), Dushanbe.
 
+It opens as a sealed envelope on ivory paper. The guest taps it, the wax seal
+breaks, the flap folds back, the card rises out and grows to fill the screen,
+and the invitation itself is revealed with the music already playing.
+
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4 and Framer Motion.
 Mobile-first, three languages, no runtime dependencies beyond those four.
 
@@ -33,7 +37,7 @@ Two values are marked **▸ EDIT ME**:
 
 | Value | What to do |
 | --- | --- |
-| `VENUE_MAPS_URL` | Replace with the exact Google Maps place link (Maps → the venue → Share → Copy link). The shipped value is a name-based Maps search, which resolves but is less precise. |
+| `VENUE_COORDINATES` | `null`. Set it to `{ lat, lng }` and both the embedded map and the "Open in Maps" button pin the venue exactly. Get the numbers from Google Maps: right-click the venue → the first menu item is `lat, lng` → click to copy. Until then the map resolves the venue by name (`VENUE_MAPS_QUERY`), which works but is less precise. |
 | `wedding.rsvp.endpoint` | `null` today. Point it at an API route or form endpoint to start collecting replies — see *RSVP* below. |
 
 The **timeline times are placeholders** apart from the 17:30 arrival, which is
@@ -52,8 +56,8 @@ build error rather than a blank space on the page.
 | Drop the file at | What it does if missing |
 | --- | --- |
 | `public/videos/wedding.mp4` | Hero plays the poster still instead. Nothing breaks, no request is made. |
-| `public/audio/wedding-song.mp3` | The floating music control does not render at all. |
-| `public/images/couple-1..3.jpg`, `hero-poster.jpg`, `closing.jpg`, `og-image.jpg` | Elegant placeholders ship in the repo and are already in place — overwrite them at the same paths. |
+| `public/audio/clarity-roie-shpigler.mp3` | **Not in the repo** — "Clarity" by Roie Shpigler is licensed music, so it has to be added by hand. Until it is, the floating music control does not render and the envelope opens silently. |
+| `public/images/couple.jpg`, `hero-poster.jpg`, `closing.jpg`, `og-image.jpg` | Elegant placeholders ship in the repo and are already in place — overwrite them at the same paths. |
 | `public/fonts/Solitude.woff2` | The site sets in Cormorant Garamond — see *Typography*. |
 
 Media presence is resolved **on the server** (`lib/media.server.ts`), so a
@@ -67,6 +71,35 @@ node scripts/generate-placeholders.mjs
 ```
 
 ---
+
+## The opening ceremony
+
+`components/envelope/` holds the sealed envelope. The sequence is a small state
+machine — `sealed → breaking → opening → rising → expanding → done` — and the
+beats are all in one `BEAT` table at the top of `Envelope.tsx`, so the pacing
+can be retuned in one place. It settles in about 3.5 seconds.
+
+Three things worth knowing before editing it:
+
+- The envelope is stacked paper panels inside a single `preserve-3d` context,
+  so the flap genuinely rotates behind the envelope rather than being hidden
+  by a z-index. Anything that must paint *over* the envelope has to live
+  outside that context — inside it, an element with no `translateZ` sorts
+  behind the front panel, and SVG gradients and filters are dropped entirely.
+  That is why the wax seal is a sibling of the envelope, not a child of the flap.
+- The card grows by animating a real rectangle from its measured position to
+  the viewport, not by scaling, so the type never smears. The growing sheet is
+  mounted at the scene root because a transformed ancestor becomes the
+  containing block even for `position: fixed`.
+- The tap is what lets the browser start audio, so the music begins there
+  rather than fighting an autoplay policy.
+
+**Replaying it.** The ceremony plays once per session (`sessionStorage`). To see
+it again, load the page with `#replay` in the URL, or call
+`__resetInvitation()` from the browser console.
+
+Under `prefers-reduced-motion` the whole sequence collapses into a short fade —
+the tap is still required, so the music still starts.
 
 ## Typography
 
@@ -87,6 +120,18 @@ and Playfair Display among them — ship a `cyrillic-ext` subset that does not
 actually draw those letters, so they drop to a system fallback mid-word.
 
 ---
+
+## Palette
+
+The invitation is printed on ivory, not staged in the dark: warm paper, cream
+plates, champagne rules and antique gold. Gold is used only for headings,
+numbers, ornaments and borders; body copy is warm brown ink so it stays
+readable. All tokens live at the top of `app/globals.css`.
+
+One thing to watch when editing gold: `.gold-leaf` is a gradient clipped to the
+glyphs, and on a light ground the pale highlights that read as metal on black
+simply vanish. The gradient keeps a narrow bright band between deeper stops for
+that reason — lightening it overall makes the text disappear rather than shine.
 
 ## Languages
 
@@ -150,18 +195,32 @@ answers in the form.
   ancestor clip rects and would otherwise never fire.
 - Skip link, labelled sections, focus-visible gold ring, 44px+ tap targets,
   16px form fields (so iOS does not zoom on focus).
-- The opening veil can be dismissed with `Escape`; the page content is in the
-  DOM underneath it and remains crawlable.
+- The envelope can be opened with `Escape` as well as a tap, so it is never a
+  trap; the page content sits in the DOM underneath it and stays crawlable.
 
 ---
+
+## The map
+
+`components/VenueMap.tsx` embeds the key-less Google Maps frame built from
+`data/wedding.ts`, so no API key or billing account is needed to deploy.
+
+Reachability is probed with a `no-cors` fetch before the frame is mounted: an
+iframe fires `load` even when the request was blocked (it loads the browser's
+own error page), so `onLoad` cannot tell success from failure. Where Google is
+unreachable — a filtered network, a corporate connection — the guest gets a
+drawn plate and the "Open in Maps" button instead of a grey broken frame.
 
 ## Structure
 
 ```
 app/            layout (fonts, metadata, icons), page, global stylesheet
-components/     Hero, Countdown, InvitationMessage, CoupleGallery, Venue,
-                Timeline, RSVP, ClosingSection, OpeningVeil, MusicPlayer,
-                LanguageSwitcher, Atmosphere, ui/ (Section, Reveal, Ornaments)
+components/     Hero, Countdown, InvitationMessage, CouplePortrait, Venue,
+                VenueMap, Timeline, RSVP, ClosingSection, MusicPlayer,
+                LanguageSwitcher, EdgeDetails, Atmosphere
+components/envelope/  Envelope (the opening ceremony) · WaxSeal
+components/ui/  Section, SectionHeading, Reveal, Ornaments,
+                Decor (DecorativeRing, FloralOrnament, Blossom, GoldDivider)
 data/           wedding.ts (configuration) · translations.ts (all copy)
 lib/            i18n, audio, gate, media, countdown, motion, reduced-motion
 public/         images · videos · audio · fonts

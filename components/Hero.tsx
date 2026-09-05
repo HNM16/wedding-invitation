@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotionSafe } from "@/lib/reduced-motion";
 import { useEffect, useRef, useState } from "react";
-import { Diamond } from "@/components/ui/Ornaments";
+import { DecorativeRing } from "@/components/ui/Decor";
 import wedding from "@/data/wedding";
 import { useGate } from "@/lib/gate";
 import { useMediaAvailability } from "@/lib/media";
@@ -101,13 +101,17 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* ── Grade & overlays: warm the image, then sink the edges ─────────── */}
+      {/* ── Grade & overlays ─────────────────────────────────────────────
+             The film is warmed and lifted rather than darkened: the invitation
+             is printed on ivory, so the hero has to stay light. A soft pool of
+             paper sits behind the type so the names read regardless of what the
+             footage happens to be doing underneath. */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 mix-blend-soft-light"
         style={{
           backgroundImage:
-            "linear-gradient(160deg, rgba(194,160,92,0.34) 0%, rgba(53,39,27,0.12) 45%, rgba(9,7,5,0.5) 100%)",
+            "linear-gradient(165deg, rgba(255,246,224,0.85) 0%, rgba(255,250,238,0.35) 48%, rgba(214,190,150,0.4) 100%)",
         }}
       />
       <div
@@ -115,7 +119,7 @@ export function Hero() {
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgba(6,4,3,0.72) 0%, rgba(6,4,3,0.34) 26%, rgba(6,4,3,0.42) 62%, rgba(9,7,5,0.94) 100%)",
+            "linear-gradient(180deg, rgba(250,246,238,0.72) 0%, rgba(250,246,238,0.34) 22%, rgba(248,243,233,0.42) 58%, rgba(248,243,233,0.99) 100%)",
         }}
       />
       <div
@@ -123,7 +127,15 @@ export function Hero() {
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(105% 78% at 50% 44%, transparent 34%, rgba(4,3,2,0.66) 100%)",
+            "radial-gradient(58% 46% at 50% 46%, rgba(253,249,240,0.78) 0%, rgba(253,249,240,0.28) 55%, transparent 100%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage:
+            "radial-gradient(112% 82% at 50% 44%, transparent 42%, rgba(236,224,200,0.75) 100%)",
         }}
       />
 
@@ -181,17 +193,17 @@ export function Hero() {
           animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
           transition={{ duration: 1.5, delay: 1.35, ease: EASE_EDITORIAL }}
         >
-          <div className="flex items-center gap-3 text-gold/70">
+          <div className="flex items-center gap-3 text-gold/80">
             <span className="hairline h-px w-10" />
-            <Diamond className="h-2 w-2" />
+            <DecorativeRing className="h-4 w-7" />
             <span className="hairline h-px w-10" />
           </div>
 
-          <p className="text-[clamp(0.7rem,2.6vw,0.85rem)] font-light uppercase tracking-[0.34em] text-ivory/90">
+          <p className="text-[clamp(0.7rem,2.6vw,0.85rem)] font-light uppercase tracking-[0.34em] text-ink">
             {date}
           </p>
 
-          <p className="text-[0.6875rem] font-light uppercase tracking-[0.26em] text-sand/60">
+          <p className="text-[0.6875rem] font-light uppercase tracking-[0.26em] text-ink-soft">
             {t.hero.location}
           </p>
         </motion.div>
@@ -206,12 +218,12 @@ export function Hero() {
         animate={show ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1.4, delay: 1.9, ease: EASE_EDITORIAL }}
       >
-        <span className="text-[0.6rem] font-light uppercase tracking-[0.4em] text-sand/55">
+        <span className="text-[0.6rem] font-light uppercase tracking-[0.4em] text-ink-soft/80">
           {t.hero.scroll}
         </span>
-        <span className="relative h-12 w-px overflow-hidden bg-gold/15">
+        <span className="relative h-12 w-px overflow-hidden bg-gold/10">
           <span
-            className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-transparent via-champagne/80 to-transparent"
+            className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-transparent via-gold-deep to-transparent"
             style={{ animation: "scroll-cue 2.8s ease-in-out infinite" }}
           />
         </span>

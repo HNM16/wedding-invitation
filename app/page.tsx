@@ -1,5 +1,5 @@
 import { ClosingSection } from "@/components/ClosingSection";
-import { CoupleGallery } from "@/components/CoupleGallery";
+import { CouplePortrait } from "@/components/CouplePortrait";
 import { Countdown } from "@/components/Countdown";
 import { Hero } from "@/components/Hero";
 import { InvitationMessage } from "@/components/InvitationMessage";
@@ -13,7 +13,7 @@ export default function Page() {
       <Hero />
       <Countdown />
       <InvitationMessage />
-      <CoupleGallery />
+      <CouplePortrait />
       <Venue />
       <Timeline />
       <RSVP />

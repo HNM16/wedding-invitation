@@ -1,26 +1,24 @@
 /**
- * The room the invitation sits in.
+ * The paper the invitation is printed on.
  *
- * A fixed stack of layered gradients, two slow light leaks and a handful of
- * gold embers. Everything is pure CSS on `transform`/`opacity` only — no
- * JavaScript runs per frame, nothing repaints on scroll, and the whole layer is
- * `pointer-events: none`, so it costs almost nothing on a phone.
+ * A fixed stack of warm ivory washes, two slow pools of sunlight and a few dust
+ * motes drifting through them. Everything is pure CSS on `transform`/`opacity`
+ * only — no JavaScript runs per frame, nothing repaints on scroll, and the
+ * whole layer is `pointer-events: none`, so it costs almost nothing on a phone.
  *
- * Ember positions are a fixed table (never random) so server and client markup
+ * Mote positions are a fixed table (never random) so server and client markup
  * always match.
  */
 
-const EMBERS = [
-  { left: "8%", top: "78%", size: 2.5, delay: 0, duration: 17, drift: "18px", peak: 0.4 },
-  { left: "21%", top: "62%", size: 1.5, delay: 4.5, duration: 21, drift: "-14px", peak: 0.32 },
-  { left: "34%", top: "88%", size: 2, delay: 9, duration: 19, drift: "22px", peak: 0.45 },
-  { left: "47%", top: "70%", size: 1.5, delay: 2.5, duration: 24, drift: "-20px", peak: 0.28 },
-  { left: "58%", top: "84%", size: 2.5, delay: 12, duration: 18, drift: "12px", peak: 0.42 },
-  { left: "69%", top: "66%", size: 1.5, delay: 6.5, duration: 22, drift: "-16px", peak: 0.3 },
-  { left: "80%", top: "80%", size: 2, delay: 15, duration: 20, drift: "20px", peak: 0.38 },
-  { left: "91%", top: "72%", size: 1.5, delay: 3.5, duration: 25, drift: "-11px", peak: 0.26 },
-  { left: "14%", top: "40%", size: 1.5, delay: 11, duration: 26, drift: "16px", peak: 0.22 },
-  { left: "63%", top: "38%", size: 2, delay: 18, duration: 23, drift: "-18px", peak: 0.24 },
+const MOTES = [
+  { left: "9%", top: "76%", size: 3, delay: 0, duration: 19, drift: "20px", peak: 0.32 },
+  { left: "22%", top: "60%", size: 2, delay: 5, duration: 23, drift: "-16px", peak: 0.24 },
+  { left: "35%", top: "86%", size: 2.5, delay: 9.5, duration: 21, drift: "24px", peak: 0.3 },
+  { left: "48%", top: "68%", size: 2, delay: 3, duration: 26, drift: "-22px", peak: 0.2 },
+  { left: "60%", top: "82%", size: 3, delay: 13, duration: 20, drift: "14px", peak: 0.28 },
+  { left: "71%", top: "64%", size: 2, delay: 7, duration: 24, drift: "-18px", peak: 0.22 },
+  { left: "83%", top: "78%", size: 2.5, delay: 16, duration: 22, drift: "22px", peak: 0.26 },
+  { left: "93%", top: "70%", size: 2, delay: 4, duration: 27, drift: "-12px", peak: 0.18 },
 ];
 
 export function Atmosphere() {
@@ -29,76 +27,67 @@ export function Atmosphere() {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
-      {/* Ground: warm black falling into espresso at the edges */}
+      {/* Ground: ivory warming toward champagne at the edges */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: [
-            "radial-gradient(120% 80% at 50% -10%, rgba(53,39,27,0.55) 0%, rgba(13,10,7,0) 60%)",
-            "radial-gradient(90% 60% at 8% 108%, rgba(36,26,18,0.6) 0%, rgba(9,7,5,0) 62%)",
-            "radial-gradient(80% 55% at 96% 42%, rgba(45,33,22,0.42) 0%, rgba(9,7,5,0) 58%)",
-            "linear-gradient(180deg, #0b0806 0%, #090705 38%, #0d0a07 68%, #090705 100%)",
+            "radial-gradient(115% 75% at 50% -8%, rgba(255,252,246,0.95) 0%, rgba(248,243,233,0) 62%)",
+            "radial-gradient(85% 55% at 6% 104%, rgba(233,220,196,0.62) 0%, rgba(248,243,233,0) 64%)",
+            "radial-gradient(80% 55% at 97% 40%, rgba(238,228,206,0.6) 0%, rgba(248,243,233,0) 60%)",
+            "linear-gradient(180deg, #faf6ee 0%, #f8f3e9 36%, #f4ecdd 70%, #f8f3e9 100%)",
           ].join(","),
         }}
       />
 
-      {/* Light leak — warm gold, drifting slowly across the upper third */}
+      {/* Sunlight — warm, drifting slowly across the upper third */}
       <div
-        className="absolute -left-[18%] -top-[22%] h-[75vh] w-[85vw] rounded-full blur-[110px] will-change-transform"
+        className="absolute -left-[16%] -top-[20%] h-[75vh] w-[85vw] rounded-full blur-[110px] will-change-transform"
         style={{
           backgroundImage:
-            "radial-gradient(closest-side, rgba(194,160,92,0.16), rgba(138,106,50,0.06) 55%, transparent 100%)",
+            "radial-gradient(closest-side, rgba(255,246,224,0.9), rgba(240,226,196,0.4) 55%, transparent 100%)",
           animation: "drift-a 34s ease-in-out infinite",
         }}
       />
 
-      {/* Light leak — deeper amber, counter-drifting near the lower right */}
+      {/* Counter-drifting champagne wash near the lower right */}
       <div
-        className="absolute -bottom-[26%] -right-[14%] h-[70vh] w-[75vw] rounded-full blur-[130px] will-change-transform"
+        className="absolute -bottom-[24%] -right-[12%] h-[70vh] w-[75vw] rounded-full blur-[130px] will-change-transform"
         style={{
           backgroundImage:
-            "radial-gradient(closest-side, rgba(138,106,50,0.14), rgba(53,39,27,0.08) 58%, transparent 100%)",
+            "radial-gradient(closest-side, rgba(226,206,168,0.5), rgba(216,191,140,0.22) 58%, transparent 100%)",
           animation: "drift-b 46s ease-in-out infinite",
         }}
       />
 
-      {/* Gold embers */}
-      {EMBERS.map((e, i) => (
+      {/* Dust in the light */}
+      {MOTES.map((m, i) => (
         <span
           key={i}
           className="absolute rounded-full"
           style={
             {
-              left: e.left,
-              top: e.top,
-              width: e.size,
-              height: e.size,
-              backgroundColor: "rgba(235,217,180,0.9)",
-              boxShadow: "0 0 6px 1px rgba(194,160,92,0.5)",
-              animation: `ember ${e.duration}s linear ${e.delay}s infinite`,
-              "--ember-x": e.drift,
-              "--ember-peak": e.peak,
+              left: m.left,
+              top: m.top,
+              width: m.size,
+              height: m.size,
+              backgroundColor: "rgba(168,129,63,0.55)",
+              boxShadow: "0 0 5px 1px rgba(216,191,140,0.45)",
+              animation: `ember ${m.duration}s linear ${m.delay}s infinite`,
+              "--ember-x": m.drift,
+              "--ember-peak": m.peak,
               opacity: 0,
             } as React.CSSProperties
           }
         />
       ))}
 
-      {/* Cinematic letterboxing: the frame darkens toward top and bottom */}
+      {/* The page edges settle very slightly, the way printed paper does */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgba(4,3,2,0.55) 0%, transparent 18%, transparent 82%, rgba(4,3,2,0.6) 100%)",
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(130% 90% at 50% 45%, transparent 42%, rgba(4,3,2,0.5) 100%)",
+            "radial-gradient(125% 92% at 50% 45%, transparent 55%, rgba(150,122,80,0.12) 100%)",
         }}
       />
     </div>

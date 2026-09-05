@@ -20,9 +20,9 @@ export function LanguageSwitcher() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 1.4, ease: EASE_EDITORIAL }}
       aria-label={t.common.languageSwitcher}
-      className="fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[max(1.25rem,env(safe-area-inset-top))] z-50"
+      className="fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[max(1.25rem,env(safe-area-inset-top))] z-[95]"
     >
-      <ul className="flex items-center gap-0.5 rounded-full border border-gold/20 bg-noir/55 p-1 backdrop-blur-md">
+      <ul className="flex items-center gap-0.5 rounded-full border border-gold/35 bg-paper/75 p-1 shadow-[0_10px_26px_-20px_rgba(96,74,42,0.65)] backdrop-blur-md">
         {LANGUAGES.map((item) => {
           const active = item.code === lang;
           return (
@@ -35,18 +35,18 @@ export function LanguageSwitcher() {
                 title={item.name}
                 className={`relative flex h-9 min-w-11 items-center justify-center rounded-full px-3 text-[0.6875rem] font-medium tracking-[0.2em] transition-colors duration-500 ${
                   active
-                    ? "text-champagne"
-                    : "text-mute hover:text-sand"
+                    ? "text-gold-deep"
+                    : "text-mute hover:text-ink"
                 }`}
               >
                 {active ? (
                   <motion.span
                     layoutId="lang-pill"
                     aria-hidden="true"
-                    className="absolute inset-0 rounded-full border border-gold/35"
+                    className="absolute inset-0 rounded-full border border-gold/45"
                     style={{
                       backgroundImage:
-                        "linear-gradient(180deg, rgba(194,160,92,0.20), rgba(138,106,50,0.07))",
+                        "linear-gradient(180deg, rgba(255,253,247,0.95), rgba(233,220,196,0.9))",
                     }}
                     transition={
                       reduced

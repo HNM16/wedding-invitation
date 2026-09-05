@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotionSafe } from "@/lib/reduced-motion";
 import { useRef } from "react";
 import { Diamond, Flourish, Monogram } from "@/components/ui/Ornaments";
+import { FloralOrnament } from "@/components/ui/Decor";
 import { MaskedLine, Reveal } from "@/components/ui/Reveal";
 import wedding from "@/data/wedding";
 import { useI18n } from "@/lib/i18n";
@@ -47,12 +48,14 @@ export function ClosingSection() {
         />
       </motion.div>
 
+      {/* The photograph is lifted into the paper rather than sunk into black:
+          an ivory scrim, a warm grade, then a champagne vignette. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 mix-blend-soft-light"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgba(9,7,5,0.96) 0%, rgba(9,7,5,0.7) 30%, rgba(9,7,5,0.78) 70%, rgba(6,4,3,0.98) 100%)",
+            "linear-gradient(170deg, rgba(255,247,228,0.9), rgba(233,220,196,0.3) 55%, rgba(150,122,80,0.4))",
         }}
       />
       <div
@@ -60,13 +63,38 @@ export function ClosingSection() {
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(95% 70% at 50% 50%, transparent 30%, rgba(4,3,2,0.72) 100%)",
+            "linear-gradient(180deg, rgba(248,243,233,0.99) 0%, rgba(248,243,233,0.62) 26%, rgba(250,246,238,0.7) 68%, rgba(248,243,233,0.99) 100%)",
         }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage:
+            "radial-gradient(62% 46% at 50% 46%, rgba(253,249,240,0.85) 0%, rgba(253,249,240,0.2) 60%, transparent 100%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage:
+            "radial-gradient(100% 74% at 50% 50%, transparent 42%, rgba(224,208,178,0.8) 100%)",
+        }}
+      />
+
+      <FloralOrnament
+        aria-hidden="true"
+        className="pointer-events-none absolute left-4 top-1/2 hidden h-56 w-14 -translate-y-1/2 text-gold/35 sm:block"
+      />
+      <FloralOrnament
+        aria-hidden="true"
+        className="pointer-events-none absolute right-4 top-1/2 hidden h-56 w-14 -translate-y-1/2 -scale-x-100 text-gold/35 sm:block"
       />
 
       <div className="relative flex w-full max-w-2xl flex-col items-center px-6 py-28 text-center sm:px-10">
         <Reveal duration={1.4}>
-          <Monogram className="h-14 w-14 text-gold/60" />
+          <Monogram className="h-14 w-14 text-gold/80" />
         </Reveal>
 
         <MaskedLine className="mt-10" delay={0.15} duration={1.5}>
@@ -82,30 +110,30 @@ export function ClosingSection() {
           </h2>
         </MaskedLine>
 
-        <Reveal delay={0.35} className="mt-8 flex items-center gap-4 text-gold/70">
+        <Reveal delay={0.35} className="mt-8 flex items-center gap-4 text-gold/80">
           <span className="hairline h-px w-12" />
           <Diamond className="h-2 w-2" />
           <span className="hairline h-px w-12" />
         </Reveal>
 
         <Reveal delay={0.45} className="mt-8">
-          <p className="text-[clamp(0.85rem,3vw,1.05rem)] font-light uppercase tracking-[0.42em] text-ivory/90">
+          <p className="text-[clamp(0.85rem,3vw,1.05rem)] font-light uppercase tracking-[0.42em] text-ink">
             {wedding.date.short}
           </p>
         </Reveal>
 
         <Reveal delay={0.6} className="mt-12">
-          <p className="display measure text-[clamp(1.15rem,3.8vw,1.6rem)] font-light italic leading-[1.6] text-ivory/85">
+          <p className="display measure text-[clamp(1.15rem,3.8vw,1.6rem)] font-light italic leading-[1.6] text-ink">
             {t.closing.message}
           </p>
         </Reveal>
 
         <Reveal delay={0.75} className="mt-14">
-          <Flourish className="h-3 w-48 text-gold/45" />
+          <Flourish className="h-3 w-48 text-gold/65" />
         </Reveal>
 
         <Reveal delay={0.85} className="mt-8">
-          <p className="text-[0.65rem] font-light uppercase tracking-[0.3em] text-sand/60">
+          <p className="text-[0.65rem] font-light uppercase tracking-[0.3em] text-mute">
             {t.closing.thanks}
           </p>
         </Reveal>

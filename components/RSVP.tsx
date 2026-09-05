@@ -5,6 +5,7 @@ import { useReducedMotionSafe } from "@/lib/reduced-motion";
 import { useId, useMemo, useRef, useState, type FormEvent } from "react";
 import { Section } from "@/components/ui/Section";
 import { Diamond, Flourish } from "@/components/ui/Ornaments";
+import { Blossom } from "@/components/ui/Decor";
 import { MaskedLine, Reveal } from "@/components/ui/Reveal";
 import wedding from "@/data/wedding";
 import { useI18n } from "@/lib/i18n";
@@ -141,7 +142,11 @@ export function RSVP() {
       <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
         {/* ── Heading column ───────────────────────────────────────────── */}
         <div className="lg:col-span-5 lg:pt-4">
-          <Reveal duration={1.1}>
+          <Reveal duration={1.1} className="mb-6">
+            <Blossom className="h-4 w-4 text-gold/70" />
+          </Reveal>
+
+          <Reveal duration={1.1} delay={0.06}>
             <p className="eyebrow">{t.rsvp.eyebrow}</p>
           </Reveal>
 
@@ -155,18 +160,18 @@ export function RSVP() {
           </MaskedLine>
 
           <Reveal delay={0.24} className="mt-8">
-            <Flourish className="h-3 w-36 text-gold/50" />
+            <Flourish className="h-3 w-36 text-gold/80" />
           </Reveal>
 
           <Reveal delay={0.32} className="mt-8">
-            <p className="measure text-[0.95rem] font-light leading-[1.9] text-sand/80">
+            <p className="measure text-[0.95rem] font-light leading-[1.9] text-ink-soft">
               {t.rsvp.subtitle.replace("{date}", deadline)}
             </p>
           </Reveal>
 
           {!isConnected ? (
             <Reveal delay={0.4} className="mt-8">
-              <p className="measure border-l border-gold/25 pl-4 text-[0.72rem] font-light leading-relaxed text-mute">
+              <p className="measure border-l border-gold/38 pl-4 text-[0.72rem] font-light leading-relaxed text-mute">
                 {t.rsvp.demoNotice}
               </p>
             </Reveal>
@@ -190,11 +195,11 @@ export function RSVP() {
                     <Diamond className="h-4 w-4 text-gold" />
                     <p
                       role="status"
-                      className="display mt-8 text-[clamp(1.3rem,4vw,1.8rem)] font-light leading-snug text-ivory"
+                      className="display mt-8 text-[clamp(1.3rem,4vw,1.8rem)] font-light leading-snug text-ink"
                     >
                       {sentAs === "yes" ? t.rsvp.successYes : t.rsvp.successNo}
                     </p>
-                    <Flourish className="mt-8 h-3 w-40 text-gold/50" />
+                    <Flourish className="mt-8 h-3 w-40 text-gold/80" />
 
                     {!isConnected ? (
                       <p className="mt-8 max-w-sm text-[0.7rem] font-light leading-relaxed text-mute">
@@ -205,7 +210,7 @@ export function RSVP() {
                     <button
                       type="button"
                       onClick={reset}
-                      className="mt-9 text-[0.65rem] uppercase tracking-[0.28em] text-sand/70 underline decoration-gold/40 underline-offset-8 transition-colors duration-500 hover:text-champagne"
+                      className="mt-9 text-[0.65rem] uppercase tracking-[0.28em] text-ink-soft/85 underline decoration-gold/50 underline-offset-8 transition-colors duration-500 hover:text-gold-deep"
                     >
                       {t.rsvp.successAgain}
                     </button>
@@ -283,8 +288,8 @@ export function RSVP() {
                               key={option.value}
                               className={`group relative flex min-h-[3.5rem] cursor-pointer items-center gap-3 border px-4 py-3 text-[0.85rem] font-light transition-colors duration-500 ${
                                 active
-                                  ? "border-gold/55 text-ivory"
-                                  : "border-gold/16 text-sand/75 hover:border-gold/35"
+                                  ? "border-gold/65 text-ink"
+                                  : "border-gold/28 text-ink-soft/90 hover:border-gold/45"
                               }`}
                               style={
                                 active
@@ -307,7 +312,7 @@ export function RSVP() {
                               <span
                                 aria-hidden="true"
                                 className={`flex h-4 w-4 shrink-0 items-center justify-center transition-opacity duration-500 ${
-                                  active ? "text-gold opacity-100" : "text-gold/40 opacity-70"
+                                  active ? "text-gold opacity-100" : "text-gold/80 opacity-70"
                                 }`}
                               >
                                 <Diamond className="h-3.5 w-3.5" />
@@ -491,7 +496,7 @@ function Stepper({
       onClick={onClick}
       disabled={disabled}
       aria-label={direction === "up" ? "+1" : "-1"}
-      className="flex h-11 w-11 shrink-0 items-center justify-center border border-gold/20 text-lg text-sand transition-colors duration-500 hover:border-gold/50 hover:text-champagne disabled:cursor-not-allowed disabled:opacity-30"
+      className="flex h-11 w-11 shrink-0 items-center justify-center border border-gold/32 text-lg text-ink-soft transition-colors duration-500 hover:border-gold/60 hover:text-gold-deep disabled:cursor-not-allowed disabled:opacity-30"
     >
       <span aria-hidden="true">{label}</span>
     </button>

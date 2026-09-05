@@ -50,11 +50,13 @@ const tj = {
     skipToContent: "Ба матни асосӣ гузаред",
   },
 
-  preloader: {
+  envelope: {
+    addressee: "Ба меҳмони азизи мо",
     label: "Даъватнома",
-    subtitle: "Тӯи Сино ва Сайёра",
-    open: "Кушодани даъватнома",
-    hint: "Беҳтараш бо садо тамошо кунед",
+    note: "Шумо даъват шудаед",
+    open: "Кушоед",
+    hint: "Барои кушодани даъватнома пахш кунед",
+    sealAlt: "Мӯҳри мумии Сино ва Сайёра",
   },
 
   hero: {
@@ -108,6 +110,8 @@ const tj = {
     address: "Душанбе, Тоҷикистон",
     mapButton: "Кушодан дар харита",
     mapHint: "Дар Google Maps кушода мешавад",
+    mapLabel: "Харитаи макони ҷашн",
+    mapUnavailable: "Харита бор нашуд. Тугмаи болоро пахш кунед.",
     note: "Ҳузури шумо ин шомро барои мо фаромӯшнашаванда мегардонад.",
   },
 
@@ -187,6 +191,10 @@ const tj = {
     pause: "Таваққуфи мусиқӣ",
     label: "Мусиқӣ",
   },
+
+  couplePhoto: {
+    caption: "Сино ва Сайёра",
+  },
 } as const;
 
 /**
@@ -228,11 +236,13 @@ const ru = {
     skipToContent: "Перейти к содержанию",
   },
 
-  preloader: {
+  envelope: {
+    addressee: "Нашему дорогому гостю",
     label: "Приглашение",
-    subtitle: "Свадьба Сино и Сайёры",
+    note: "Вы приглашены",
     open: "Открыть приглашение",
-    hint: "Лучше смотреть со звуком",
+    hint: "Нажмите, чтобы открыть приглашение",
+    sealAlt: "Сургучная печать Сино и Сайёры",
   },
 
   hero: {
@@ -286,6 +296,8 @@ const ru = {
     address: "Душанбе, Таджикистан",
     mapButton: "Открыть на карте",
     mapHint: "Откроется в Google Maps",
+    mapLabel: "Карта места торжества",
+    mapUnavailable: "Карта не загрузилась. Воспользуйтесь кнопкой выше.",
     note: "Ваше присутствие сделает этот вечер по-настоящему незабываемым.",
   },
 
@@ -364,6 +376,10 @@ const ru = {
     pause: "Выключить музыку",
     label: "Музыка",
   },
+
+  couplePhoto: {
+    caption: "Сино и Сайёра",
+  },
 } as const satisfies Dictionary;
 
 const en = {
@@ -393,11 +409,13 @@ const en = {
     skipToContent: "Skip to content",
   },
 
-  preloader: {
+  envelope: {
+    addressee: "To our dear guest",
     label: "Invitation",
-    subtitle: "The wedding of Sino & Sayora",
-    open: "Open the invitation",
-    hint: "Best experienced with sound",
+    note: "You are invited",
+    open: "Open Invitation",
+    hint: "Tap to open the invitation",
+    sealAlt: "The wax seal of Sino & Sayora",
   },
 
   hero: {
@@ -451,6 +469,8 @@ const en = {
     address: "Dushanbe, Tajikistan",
     mapButton: "Open in Maps",
     mapHint: "Opens in Google Maps",
+    mapLabel: "Map of the venue",
+    mapUnavailable: "The map could not load. Please use the button above.",
     note: "Your presence will make this evening truly unforgettable.",
   },
 
@@ -528,6 +548,10 @@ const en = {
     play: "Play music",
     pause: "Pause music",
     label: "Music",
+  },
+
+  couplePhoto: {
+    caption: "Sino & Sayora",
   },
 } as const satisfies Dictionary;
 

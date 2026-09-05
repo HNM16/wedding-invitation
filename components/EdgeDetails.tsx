@@ -32,10 +32,10 @@ export function EdgeDetails() {
         className="pointer-events-none fixed inset-x-0 top-0 z-40 h-px origin-left"
         style={{
           scaleX: reduced ? 0 : scaleX,
-          opacity: opened ? 0.55 : 0,
+          opacity: opened ? 0.6 : 0,
           transition: "opacity 1.2s ease",
           backgroundImage:
-            "linear-gradient(90deg, rgba(138,106,50,0.2), rgba(216,190,134,0.95), rgba(138,106,50,0.2))",
+            "linear-gradient(90deg, rgba(168,129,63,0.25), rgba(125,95,44,0.9), rgba(168,129,63,0.25))",
         }}
       />
 
@@ -46,7 +46,7 @@ export function EdgeDetails() {
         style={{ opacity: opened ? 1 : 0, transition: "opacity 1.6s ease 0.8s" }}
       >
         <span className="hairline-v h-20" />
-        <span className="text-[0.6rem] uppercase tracking-[0.42em] text-mute/70 [writing-mode:vertical-rl]">
+        <span className="text-[0.6rem] uppercase tracking-[0.42em] text-mute [writing-mode:vertical-rl]">
           {wedding.date.short}
         </span>
         <span className="hairline-v h-20" />
@@ -58,7 +58,7 @@ export function EdgeDetails() {
         style={{ opacity: opened ? 1 : 0, transition: "opacity 1.6s ease 0.8s" }}
       >
         <span className="hairline-v h-20" />
-        <span className="text-[0.6rem] uppercase tracking-[0.42em] text-mute/70 [writing-mode:vertical-rl] rotate-180">
+        <span className="text-[0.6rem] uppercase tracking-[0.42em] text-mute [writing-mode:vertical-rl] rotate-180">
           {wedding.venue.city} · {wedding.venue.country}
         </span>
         <span className="hairline-v h-20" />

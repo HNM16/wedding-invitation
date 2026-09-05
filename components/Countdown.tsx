@@ -5,7 +5,7 @@ import { useReducedMotionSafe } from "@/lib/reduced-motion";
 import { useEffect, useState } from "react";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Diamond, Flourish } from "@/components/ui/Ornaments";
+import { Blossom, DecorativeRing } from "@/components/ui/Decor";
 import { Reveal } from "@/components/ui/Reveal";
 import wedding from "@/data/wedding";
 import { getTimeLeft, pad, type TimeLeft } from "@/lib/countdown";
@@ -45,13 +45,15 @@ export function Countdown() {
         id="countdown-title"
         eyebrow={t.countdown.eyebrow}
         title={finished ? t.countdown.finishedTitle : t.countdown.title}
+        crest="rings"
+        motif="diamond"
       />
 
       <Reveal delay={0.2} className="mt-14 sm:mt-16">
         {finished ? (
           <div className="mx-auto flex max-w-xl flex-col items-center text-center">
-            <Flourish className="h-3 w-44 text-gold/60" />
-            <p className="display mt-8 text-[clamp(1.1rem,3.4vw,1.5rem)] font-light leading-relaxed text-ivory/90">
+            <DecorativeRing className="h-8 w-12 text-gold/80" />
+            <p className="display mt-8 text-[clamp(1.1rem,3.4vw,1.5rem)] font-light leading-relaxed text-ink">
               {t.countdown.finishedText}
             </p>
           </div>
@@ -60,7 +62,7 @@ export function Countdown() {
             {/* Hairline plate */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-[-1rem] inset-y-[-2rem] border-y border-gold/12 sm:inset-x-[-2rem]"
+              className="pointer-events-none absolute inset-x-[-1rem] inset-y-[-2rem] border-y border-gold/38 sm:inset-x-[-2rem]"
             />
 
             <ol
@@ -71,7 +73,7 @@ export function Countdown() {
                 <li
                   key={unit.key}
                   className={`relative flex flex-col items-center px-1 ${
-                    i > 0 ? "border-l border-gold/12" : ""
+                    i > 0 ? "border-l border-gold/38" : ""
                   }`}
                 >
                   <span
@@ -94,11 +96,11 @@ export function Countdown() {
       {!finished ? (
         <Reveal delay={0.4} className="mt-16 flex items-center justify-center gap-4 sm:mt-20">
           <span className="hairline h-px w-10" />
-          <p className="text-[0.65rem] font-light uppercase tracking-[0.3em] text-sand/70">
+          <p className="text-[0.65rem] font-light uppercase tracking-[0.3em] text-ink-soft/85">
             {wedding.date.short}
           </p>
-          <Diamond className="h-2 w-2 text-gold/70" />
-          <p className="text-[0.65rem] font-light uppercase tracking-[0.3em] text-sand/70">
+          <Blossom className="h-3.5 w-3.5 text-gold/80" />
+          <p className="text-[0.65rem] font-light uppercase tracking-[0.3em] text-ink-soft/85">
             {wedding.date.time}
           </p>
           <span className="hairline h-px w-10" />

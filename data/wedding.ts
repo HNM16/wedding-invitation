@@ -24,15 +24,48 @@ export const WEDDING_TIME_ZONE = "Asia/Dushanbe";
 export const WEDDING_DATE_ISO = "2026-09-19T17:30:00+05:00";
 
 /**
- * Google Maps link for the venue.
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  MAP — the single place the venue location is defined
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  The map is driven by a search query rather than invented coordinates, so
+ *  Google resolves the real place itself.
  *
- * ▸ EDIT ME: replace with the exact Google Maps place link once the venue pin
- *   is confirmed (open Google Maps → the venue → Share → Copy link).
- *   The current value is a name-based Maps search, which resolves correctly but
- *   is less precise than a place link.
+ *  Note the spelling: the hall is indexed by Google and local directories as
+ *  "Yakkasaroy" (double k) on Rahimi St / Markazi Osh — Markazi Osh being the
+ *  plov centre. The invitation displays the couple's own spelling
+ *  ("Yakassaroy"); only the lookup below uses the indexed one, because that is
+ *  what actually resolves.
+ *
+ *  ▸ EDIT ME (optional, but recommended before sending):
+ *    Set `VENUE_COORDINATES` to the venue's exact latitude/longitude and the
+ *    embedded map will drop a precise pin there instead of relying on the
+ *    search. Get them from Google Maps: right-click the venue → the first item
+ *    in the menu is "lat, lng" → click to copy.
  */
-export const VENUE_MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Yakassaroy+Grand+Hall+Plof+Centre+Dushanbe";
+export const VENUE_MAPS_QUERY = "Yakkasaroy Grand Hall, Rahimi St, Dushanbe";
+
+export type Coordinates = { lat: number; lng: number };
+
+/** ▸ EDIT ME: `{ lat: 38.5xxxx, lng: 68.7xxxx }` once confirmed. */
+export const VENUE_COORDINATES: Coordinates | null = null;
+
+/** Link opened by the "Open in Maps" button — resolves in any Maps app. */
+function buildMapsUrl(at: Coordinates | null) {
+  const query = at ? `${at.lat},${at.lng}` : VENUE_MAPS_QUERY;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+/**
+ * Embedded map source. This form of the Maps embed needs no API key and no
+ * billing account, which keeps the invitation deployable anywhere.
+ */
+function buildMapEmbedUrl(at: Coordinates | null) {
+  const query = at ? `${at.lat},${at.lng}` : VENUE_MAPS_QUERY;
+  return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${at ? 16 : 15}&output=embed`;
+}
+
+export const VENUE_MAPS_URL = buildMapsUrl(VENUE_COORDINATES);
+export const VENUE_MAP_EMBED_URL = buildMapEmbedUrl(VENUE_COORDINATES);
 
 /** Public site URL, used for canonical + Open Graph metadata. */
 export const SITE_URL = "https://sino-sayora.wedding";
@@ -63,6 +96,7 @@ export const wedding = {
     city: "Dushanbe",
     country: "Tajikistan",
     mapsUrl: VENUE_MAPS_URL,
+    mapEmbedUrl: VENUE_MAP_EMBED_URL,
   },
 
   /**
@@ -94,20 +128,23 @@ export const wedding = {
    *  control hides itself) instead of showing a broken element.
    *
    *  ▸ Drop the couple's real files at these exact paths:
-   *      public/videos/wedding.mp4      — hero background film (muted, looping)
-   *      public/audio/wedding-song.mp3  — background music
-   *      public/images/*.jpg            — photography (placeholders shipped)
+   *      public/videos/wedding.mp4                  — hero film (muted, looping)
+   *      public/audio/clarity-roie-shpigler.mp3     — "Clarity", Roie Shpigler
+   *      public/images/couple.jpg                   — the portrait
    */
+  /** Shown quietly beside the music control. */
+  music: {
+    title: "Clarity",
+    artist: "Roie Shpigler",
+  },
+
   media: {
     heroVideo: "/videos/wedding.mp4",
     heroPoster: "/images/hero-poster.jpg",
     closingImage: "/images/closing.jpg",
-    audio: "/audio/wedding-song.mp3",
-    gallery: [
-      { src: "/images/couple-1.jpg", width: 1200, height: 1600 },
-      { src: "/images/couple-2.jpg", width: 1200, height: 1600 },
-      { src: "/images/couple-3.jpg", width: 1600, height: 1100 },
-    ],
+    audio: "/audio/clarity-roie-shpigler.mp3",
+    /** The single editorial portrait of the couple. */
+    portrait: { src: "/images/couple.jpg", width: 1400, height: 1750 },
     ogImage: "/images/og-image.jpg",
   },
 
@@ -127,8 +164,8 @@ export const wedding = {
 
   site: {
     url: SITE_URL,
-    /** Browser theme colour (matches the deepest background tone). */
-    themeColor: "#0A0705",
+    /** Browser theme colour (matches the ivory paper ground). */
+    themeColor: "#F7F1E6",
   },
 } as const;
 

@@ -3,6 +3,7 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Flourish } from "@/components/ui/Ornaments";
+import { LaurelPair } from "@/components/ui/Decor";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
 
@@ -30,6 +31,8 @@ export function InvitationMessage() {
         id="invitation-title"
         eyebrow={t.invitation.eyebrow}
         title={t.invitation.title}
+        crest="blossom"
+        motif="leaf"
       />
 
       <RevealGroup
@@ -48,27 +51,29 @@ export function InvitationMessage() {
         />
 
         <RevealItem>
-          <p className="display measure text-[clamp(1.35rem,4.4vw,2rem)] font-light leading-[1.5] text-ivory">
+          <p className="display measure text-[clamp(1.35rem,4.4vw,2rem)] font-light leading-[1.5] text-ink">
             {lead}
           </p>
         </RevealItem>
 
         {rest.map((paragraph, i) => (
           <RevealItem key={i} className="mt-7 first-of-type:mt-9">
-            <p className="measure text-[clamp(0.9rem,2.7vw,1.0625rem)] font-light leading-[1.95] text-sand/85">
+            <p className="measure text-[clamp(0.9rem,2.7vw,1.0625rem)] font-light leading-[1.95] text-ink-soft">
               {paragraph}
             </p>
           </RevealItem>
         ))}
 
         <RevealItem className="mt-12">
-          <Flourish className="h-3 w-40 text-gold/55" />
+          <Flourish className="h-3 w-40 text-gold/65" />
         </RevealItem>
 
         <RevealItem className="mt-7">
-          <p className="display gold-leaf-fine text-[clamp(1.05rem,3.2vw,1.4rem)] italic">
-            {t.invitation.signature}
-          </p>
+          <LaurelPair>
+            <p className="display gold-leaf-fine text-[clamp(1.05rem,3.2vw,1.4rem)] italic">
+              {t.invitation.signature}
+            </p>
+          </LaurelPair>
         </RevealItem>
       </RevealGroup>
     </Section>

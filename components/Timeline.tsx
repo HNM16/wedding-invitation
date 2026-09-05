@@ -41,6 +41,8 @@ export function Timeline() {
         id="timeline-title"
         eyebrow={t.timeline.eyebrow}
         title={t.timeline.title}
+        crest="blossom"
+        motif="blossom"
       />
 
       <ol
@@ -50,7 +52,7 @@ export function Timeline() {
         {/* The track: a dim rail with a gold thread that fills on scroll */}
         <span
           aria-hidden="true"
-          className="absolute left-[0.4375rem] top-2 h-[calc(100%-1rem)] w-px bg-gold/12 lg:left-1/2 lg:-translate-x-1/2"
+          className="absolute left-[0.4375rem] top-2 h-[calc(100%-1rem)] w-px bg-gold/10 lg:left-1/2 lg:-translate-x-1/2"
         />
         <motion.span
           aria-hidden="true"
@@ -80,7 +82,7 @@ export function Timeline() {
                 viewport={viewportOnce}
                 transition={{ duration: 0.9, ease: EASE_EDITORIAL }}
               >
-                <span className="absolute inset-0 rounded-full bg-noir" />
+                <span className="absolute inset-0 rounded-full bg-paper" />
                 <Diamond className="relative h-3.5 w-3.5" />
               </motion.span>
 
@@ -100,11 +102,11 @@ export function Timeline() {
                     {event.time}
                   </p>
 
-                  <h3 className="display mt-4 text-[clamp(1.1rem,3.4vw,1.45rem)] font-light tracking-wide text-ivory">
+                  <h3 className="display mt-4 text-[clamp(1.1rem,3.4vw,1.45rem)] font-light tracking-wide text-ink">
                     {copy.title}
                   </h3>
 
-                  <p className="mt-3 max-w-sm text-[0.9rem] font-light leading-[1.85] text-sand/75 lg:max-w-none">
+                  <p className="mt-3 max-w-sm text-[0.9rem] font-light leading-[1.85] text-ink-soft/90 lg:max-w-none">
                     {copy.description}
                   </p>
 

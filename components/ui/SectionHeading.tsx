@@ -1,6 +1,6 @@
 "use client";
 
-import { Divider } from "@/components/ui/Ornaments";
+import { Blossom, DecorativeRing, GoldDivider } from "@/components/ui/Decor";
 import { MaskedLine, Reveal } from "@/components/ui/Reveal";
 
 /**
@@ -14,6 +14,8 @@ export function SectionHeading({
   align = "center",
   className = "",
   titleClassName = "",
+  crest,
+  motif = "diamond",
 }: {
   eyebrow: string;
   title: string;
@@ -21,6 +23,10 @@ export function SectionHeading({
   align?: "center" | "left";
   className?: string;
   titleClassName?: string;
+  /** A small decoration printed above the label. */
+  crest?: "blossom" | "rings";
+  /** What sits in the middle of the rule beneath. */
+  motif?: "diamond" | "blossom" | "rings" | "leaf";
 }) {
   const centered = align === "center";
 
@@ -28,7 +34,17 @@ export function SectionHeading({
     <div
       className={`flex flex-col ${centered ? "items-center text-center" : "items-start text-left"} ${className}`}
     >
-      <Reveal duration={1.1}>
+      {crest ? (
+        <Reveal duration={1.1} className="mb-6">
+          {crest === "blossom" ? (
+            <Blossom className="h-4 w-4 text-gold/70" />
+          ) : (
+            <DecorativeRing className="h-6 w-10 text-gold/70" />
+          )}
+        </Reveal>
+      ) : null}
+
+      <Reveal duration={1.1} delay={crest ? 0.06 : 0}>
         <p className="eyebrow">{eyebrow}</p>
       </Reveal>
 
@@ -44,7 +60,7 @@ export function SectionHeading({
       </MaskedLine>
 
       <Reveal delay={0.3} y={14} className={centered ? "mt-8" : "mt-8 self-start"}>
-        <Divider width={centered ? "min(18rem, 52vw)" : "9rem"} />
+        <GoldDivider motif={motif} width={centered ? "min(18rem, 52vw)" : "9rem"} />
       </Reveal>
     </div>
   );
