@@ -15,8 +15,10 @@ import "./globals.css";
  * Tajik letters ғ ӣ қ ӯ ҳ ҷ rather than only declaring the subset.
  */
 const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  weight: ["300", "400", "500", "600"],
+  /* Only the subsets this invitation actually sets: Latin for the couple's
+     names and the venue, Cyrillic + Cyrillic-Ext for Tajik and Russian. */
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  weight: ["300", "400"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
@@ -32,8 +34,8 @@ const cormorant = Cormorant_Garamond({
  * fallback mid-word. Commissioner draws all of them.
  */
 const commissioner = Commissioner({
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  weight: ["200", "300", "400", "500"],
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  weight: ["300", "400", "500"],
   variable: "--font-commissioner",
   display: "swap",
 });
