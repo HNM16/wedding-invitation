@@ -32,7 +32,6 @@ export function Venue() {
         id="venue-title"
         eyebrow={t.venue.eyebrow}
         title={t.venue.title}
-        crest="rings"
         motif="leaf"
       />
 

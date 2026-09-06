@@ -71,6 +71,20 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @layer base {
+  /* Gold re-mixed per surface. `Section` overrides these on every section, so
+     the same class reads as metal on ivory and on champagne alike; these are
+     the ivory values, used anywhere outside a section (the envelope, the
+     floating controls). See `lib/tones.ts`. */
+  :root {
+    --leaf-1: #6d5124;
+    --leaf-2: #96742f;
+    --leaf-3: #c9ab6d;
+    --leaf-4: #a8813f;
+    --leaf-5: #7a5b28;
+    --gold-text: #8a6a32;
+    --gold-line: rgba(168, 129, 63, 0.5);
+  }
+
   html {
     /* `clip` (not `hidden`) prevents horizontal overflow without breaking
        position: sticky inside the document. */
@@ -144,14 +158,14 @@
   .gold-leaf {
     background-image: linear-gradient(
       104deg,
-      #6d5124 0%,
-      #96742f 15%,
-      #c9ab6d 29%,
-      #a8813f 41%,
-      #7a5b28 57%,
-      #b18b48 73%,
-      #8a6a32 88%,
-      #6d5124 100%
+      var(--leaf-1) 0%,
+      var(--leaf-2) 15%,
+      var(--leaf-3) 29%,
+      var(--leaf-4) 41%,
+      var(--leaf-5) 57%,
+      var(--leaf-3) 73%,
+      var(--leaf-2) 88%,
+      var(--leaf-1) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -161,11 +175,11 @@
   .gold-leaf-fine {
     background-image: linear-gradient(
       100deg,
-      #745626 0%,
-      #9c7936 34%,
-      #c2a065 52%,
-      #8f6f31 72%,
-      #6d5124 100%
+      var(--leaf-1) 0%,
+      var(--leaf-2) 34%,
+      var(--leaf-3) 52%,
+      var(--leaf-4) 72%,
+      var(--leaf-5) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -179,7 +193,7 @@
     font-weight: 400;
     letter-spacing: 0.42em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--color-gold-deep) 78%, transparent);
+    color: var(--gold-text);
   }
 
   /* ── Editorial display heading ────────────────────────────────────────── */
@@ -196,7 +210,7 @@
     background-image: linear-gradient(
       90deg,
       transparent,
-      color-mix(in srgb, var(--color-gold) 55%, transparent) 50%,
+      var(--gold-line) 50%,
       transparent
     );
   }
@@ -206,7 +220,7 @@
     background-image: linear-gradient(
       180deg,
       transparent,
-      color-mix(in srgb, var(--color-gold) 45%, transparent) 50%,
+      var(--gold-line) 50%,
       transparent
     );
   }
@@ -227,7 +241,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    border: 1px solid color-mix(in srgb, var(--color-gold) 26%, transparent);
+    border: 1px solid var(--gold-line);
   }
 
   /* ── Paper grain: one fixed layer, multiplied into the ivory ──────────── */
@@ -271,13 +285,13 @@
     font-weight: 500;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--color-gold-deep);
+    color: var(--gold-text);
     background-image: linear-gradient(
       180deg,
-      rgba(255, 253, 248, 0.9),
-      color-mix(in srgb, var(--color-champagne) 55%, transparent)
+      rgba(255, 253, 248, 0.95),
+      rgba(244, 233, 210, 0.85)
     );
-    border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+    border: 1px solid var(--gold-line);
     overflow: hidden;
     box-shadow: 0 10px 24px -18px rgba(74, 56, 34, 0.55);
     transition:

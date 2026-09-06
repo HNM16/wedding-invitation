@@ -1,15 +1,24 @@
 import type { ReactNode } from "react";
-import { toneGradient, type SectionId } from "@/lib/tones";
+import {
+  blendGradient,
+  surfaceOf,
+  surfaceVars,
+  type SectionId,
+} from "@/lib/tones";
 
 /**
- * Shared section shell.
+ * Shared section shell — and the thing that makes a section look like a sheet
+ * of stationery rather than a coloured band.
  *
- * Beyond the editorial rhythm (generous vertical air, safe-area-aware gutters)
- * it paints the section's paper tone, blended into the tones above and below —
- * see `lib/tones.ts`, where the order and the tones are declared once.
+ * Five layers, bottom to top:
+ *   1. the blend into the sections above and below;
+ *   2. the stock's own gradient — warm ivory, or foiled champagne;
+ *   3. a metallic sheen, on the foiled stocks only;
+ *   4. paper grain, multiplied in;
+ *   5. a fine gold rule printed just inside the edges.
  *
- * `light` places a soft pool of warm light inside the band, so each section is
- * lit a little differently instead of being a flat fill.
+ * It also sets the per-surface gold variables, because the gold that reads as
+ * metal on ivory disappears on champagne. See `lib/tones.ts`.
  */
 export function Section({
   id,
@@ -18,6 +27,7 @@ export function Section({
   innerClassName = "",
   labelledBy,
   light = "top",
+  rule = true,
 }: {
   id: SectionId;
   children: ReactNode;
@@ -26,14 +36,16 @@ export function Section({
   labelledBy?: string;
   /** Where the light falls, or `none` for an evenly lit sheet. */
   light?: "top" | "left" | "right" | "none";
+  /** The hairline frame printed inside the edges. */
+  rule?: boolean;
 }) {
-  /* Kept deliberately faint: a stronger pool washes the paper tone back
-     toward ivory and the section stops reading as its own sheet. */
+  const surface = surfaceOf(id);
+
   const pool = {
-    top: "radial-gradient(66% 44% at 50% 4%, rgba(255,253,247,0.5) 0%, rgba(255,253,247,0) 62%)",
-    left: "radial-gradient(52% 46% at 4% 22%, rgba(255,253,247,0.46) 0%, rgba(255,253,247,0) 58%)",
+    top: "radial-gradient(64% 42% at 50% 3%, rgba(255,253,247,0.45) 0%, rgba(255,253,247,0) 62%)",
+    left: "radial-gradient(50% 44% at 3% 20%, rgba(255,253,247,0.4) 0%, rgba(255,253,247,0) 58%)",
     right:
-      "radial-gradient(52% 46% at 96% 18%, rgba(255,253,247,0.46) 0%, rgba(255,253,247,0) 58%)",
+      "radial-gradient(50% 44% at 97% 16%, rgba(255,253,247,0.4) 0%, rgba(255,253,247,0) 58%)",
     none: null,
   }[light];
 
@@ -41,14 +53,64 @@ export function Section({
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={`relative w-full py-[clamp(5.5rem,13vh,10rem)] ${className}`}
-      style={{ backgroundImage: toneGradient(id) }}
+      className={`relative isolate w-full py-[clamp(5.5rem,13vh,10rem)] ${className}`}
+      style={{ ...surfaceVars(id), backgroundImage: blendGradient(id) }}
     >
+      {/* ② the stock itself, held clear of the blend at top and bottom */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          backgroundImage: surface.gradient,
+          maskImage:
+            "linear-gradient(180deg, transparent 0%, #000 13%, #000 87%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, transparent 0%, #000 13%, #000 87%, transparent 100%)",
+        }}
+      />
+
+      {/* ③ foil */}
+      {surface.sheen ? (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            backgroundImage: surface.sheen,
+            maskImage:
+              "linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%)",
+          }}
+        />
+      ) : null}
+
+      {/* ④ paper grain */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply"
+        style={{
+          opacity: surface.grain,
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundSize: "180px 180px",
+        }}
+      />
+
+      {/* ⑤ light */}
       {pool ? (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 -z-10"
           style={{ backgroundImage: pool }}
+        />
+      ) : null}
+
+      {/* the printed rule */}
+      {rule ? (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-[clamp(0.75rem,3vw,2.5rem)] inset-y-[clamp(2rem,5vh,3.5rem)] border"
+          style={{ borderColor: surface.rule, opacity: 0.55 }}
         />
       ) : null}
 

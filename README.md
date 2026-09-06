@@ -55,9 +55,8 @@ build error rather than a blank space on the page.
 
 | Drop the file at | What it does if missing |
 | --- | --- |
-| `public/videos/wedding-hero.mp4` | Hero plays the poster still instead. Nothing breaks, no request is made. |
-| `public/videos/wedding-hero-mobile.mp4` | Optional. A smaller, heavily compressed cut used on screens under 768px; phones fall back to the full file when it is absent. |
-| `public/audio/wedding-music.mp3` | **Not in the repo.** See *Music* below. Until it is added the floating music control does not render and the envelope opens silently. |
+| `public/videos/wedding-video.mp4` | Hero shows the poster still instead. Nothing breaks, nothing is requested. |
+| `public/audio/music.mp3` | The music control does not render and the envelope opens silently. |
 | `public/images/couple.jpg`, `hero-poster.jpg`, `closing.jpg`, `og-image.jpg` | Elegant placeholders ship in the repo and are already in place — overwrite them at the same paths. |
 | `public/fonts/Solitude.woff2` | The site sets in Cormorant Garamond — see *Typography*. |
 
@@ -102,48 +101,31 @@ it again, load the page with `#replay` in the URL, or call
 Under `prefers-reduced-motion` the whole sequence collapses into a short fade —
 the tap is still required, so the music still starts.
 
-## Music
+## Music and the film
 
-The track is not bundled, because nothing may be shipped here without a licence
-that actually covers it. Add your own copy at `public/audio/wedding-music.mp3`.
+Both are the couple's own files, at exactly these paths:
 
-Something romantic, cinematic and soft suits the invitation best — solo piano,
-or piano with light strings — at a level that sits under the page rather than
-performing over it. Two sources whose licences allow this use:
+```
+public/videos/wedding-video.mp4
+public/audio/music.mp3
+```
 
-- **[Pixabay Music](https://pixabay.com/music/search/wedding%20piano/)** — the
-  Pixabay Content Licence permits commercial and non-commercial use with no
-  attribution required. The simplest option.
-- **[Free Stock Music](https://www.free-stock-music.com/piano.html)** — largely
-  CC BY 4.0, which is free to use but *does* require crediting the composer
-  somewhere on the page.
+**The music starts on the tap that opens the envelope.** That gesture is what
+lets a browser begin audio at all, so it is the one the invitation uses — there
+is no second click, and no "press play to start" step. The floating control
+takes over afterwards for pause and resume.
 
-Do not rip the track from a streaming site or lift the audio from another
-wedding website; neither is licensed for this.
+**The film is the hero section**, not a video inside a card: a full-bleed layer
+at `position: absolute; inset: 0; object-fit: cover`, with the couple's names
+set over a warm scrim above it. It is used a second time behind the closing
+frame, from the same file, held paused until that section is actually on screen
+— a second video decoding through the whole page is what ruins a phone.
 
-The music starts on the guest's tap to open the envelope — that gesture is what
-lets a browser begin audio at all — and the floating control takes over from
-there.
-
-## The hero film
-
-Add the couple's film at `public/videos/wedding-hero.mp4`, with its first frame
-at `public/images/wedding-hero-poster.jpg`.
-
-The poster is always painted and is the LCP element; the film fades in over it
-only once it can play. `lib/hero-video.ts` decides whether to play one at all,
-and every "no" simply leaves the still photograph:
-
-- no file → nothing to play;
-- `prefers-reduced-motion` → a looping film is what that preference asks us not
-  to run;
-- Save-Data, or a 2g/3g connection → a guest on a metered phone should not be
-  made to download a background video;
-- a screen under 768px with `wedding-hero-mobile.mp4` present → the smaller cut.
-
-The server always renders "poster only" and the client opts in after mount, so
-hydration stays silent and nobody downloads a video before we know it is
-welcome.
+Neither is touched while the envelope is still sealed: no `<video>` is mounted,
+nothing is fetched, nothing is decoded. `lib/hero-video.ts` holds that rule,
+along with the one exception — `prefers-reduced-motion`, where a looping
+background film is exactly what the preference asks us not to run and the
+poster stands in.
 
 ## Typography
 

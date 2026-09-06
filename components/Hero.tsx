@@ -15,11 +15,13 @@ import { EASE_EDITORIAL } from "@/lib/motion";
 /**
  * Fullscreen cinematic opening.
  *
- * Media strategy: the poster image is always painted first (it is the LCP
- * element and ships with `priority`), and the film fades in on top once it can
- * actually play. `useHeroVideo` decides whether to play one at all and which
- * cut to use — see the reasons there. Every "no" simply leaves the still
- * photograph, never a black rectangle or a broken player.
+ * The film is the section: a fullscreen background layer, with the couple's
+ * names set over it.
+ *
+ * It does not exist until the envelope has been opened — nothing of the site
+ * is fetched or decoded behind the sealed invitation. Until then, and whenever
+ * `useHeroVideo` declines, the poster still stands in its place, so there is
+ * never a black rectangle or a broken player.
  */
 export function Hero() {
   const { t, formatDate } = useI18n();

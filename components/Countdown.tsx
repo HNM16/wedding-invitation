@@ -45,7 +45,6 @@ export function Countdown() {
         id="countdown-title"
         eyebrow={t.countdown.eyebrow}
         title={finished ? t.countdown.finishedTitle : t.countdown.title}
-        crest="rings"
         motif="diamond"
       />
 

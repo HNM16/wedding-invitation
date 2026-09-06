@@ -31,7 +31,6 @@ export function InvitationMessage() {
         id="invitation-title"
         eyebrow={t.invitation.eyebrow}
         title={t.invitation.title}
-        crest="blossom"
         motif="leaf"
       />
 

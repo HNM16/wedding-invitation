@@ -1,4 +1,4 @@
-import { TONE } from "@/lib/tones";
+import { SURFACE } from "@/lib/tones";
 
 /**
  * The base sheet.
@@ -13,7 +13,7 @@ export function Atmosphere() {
     <div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-      style={{ backgroundColor: TONE.ivory }}
+      style={{ backgroundColor: SURFACE.ivory.base }}
     >
       <div
         className="absolute -left-[16%] -top-[20%] h-[70vh] w-[80vw] rounded-full blur-[120px]"

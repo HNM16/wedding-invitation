@@ -1,21 +1,8 @@
-Place the background music here as: wedding-music.mp3
+Place the music here as: music.mp3
 
-Pick something romantic, cinematic and soft — solo piano or piano with light
-strings suits the invitation best, at a level that sits under the page rather
-than performing over it.
+It starts on the guest's tap to open the envelope — that gesture is what lets a
+browser begin audio at all — and the floating control takes over from there.
+There is no second click to start it.
 
-Two sources with licences that allow this use:
-
-  · Pixabay Music  — https://pixabay.com/music/search/wedding%20piano/
-    The Pixabay Content Licence permits commercial and non-commercial use with
-    no attribution required. Simplest option.
-
-  · Free Stock Music — https://www.free-stock-music.com/piano.html
-    Largely CC BY 4.0, which is free to use but *does* require crediting the
-    composer somewhere on the page.
-
-Do not rip the track from a streaming site or lift the audio from another
-wedding website — neither is licensed for this.
-
-While this file is absent the floating music control does not render at all,
-and the envelope opens silently. Nothing else changes.
+While this file is absent the music control does not render, and the envelope
+opens silently. Nothing else changes.

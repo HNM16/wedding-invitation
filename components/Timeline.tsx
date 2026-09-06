@@ -41,7 +41,6 @@ export function Timeline() {
         id="timeline-title"
         eyebrow={t.timeline.eyebrow}
         title={t.timeline.title}
-        crest="blossom"
         motif="blossom"
       />
 

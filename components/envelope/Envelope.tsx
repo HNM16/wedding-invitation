@@ -389,8 +389,32 @@ export function Envelope() {
                     clipPath: "polygon(0 0, 52% 64%, 0 100%)",
                   }}
                 />
-                {/* gold rule just inside the edge */}
-                <span className="absolute inset-[6px] rounded-[2px] border border-gold/22" />
+                {/* gold rule just inside the edge, with a printed corner
+                    flourish at each turn — the decoration a good envelope
+                    carries on its face */}
+                <span className="absolute inset-[6px] rounded-[2px] border border-gold/28" />
+                {[
+                  "left-[6px] top-[6px]",
+                  "right-[6px] top-[6px] rotate-90",
+                  "right-[6px] bottom-[6px] rotate-180",
+                  "left-[6px] bottom-[6px] -rotate-90",
+                ].map((position) => (
+                  <svg
+                    key={position}
+                    viewBox="0 0 28 28"
+                    className={`absolute h-6 w-6 text-gold/45 ${position}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.7"
+                    strokeLinecap="round"
+                  >
+                    <path d="M0 10c4.4 0 8-3.6 8-8" />
+                    <path d="M2 14c3.4-1.6 9.6-7.4 10.8-12" opacity="0.65" />
+                    <path d="M6.4 5.6c1.5-.9 3-.6 3.9.4-1.2 1-2.9 1-3.9-.4Z" />
+                    <path d="M5.6 6.4c-.9 1.5-.6 3 .4 3.9 1-1.2 1-2.9-.4-3.9Z" />
+                    <circle cx="12.4" cy="1.6" r="0.8" fill="currentColor" stroke="none" />
+                  </svg>
+                ))}
                 {/* paper sheen */}
                 <span
                   className="absolute inset-0"

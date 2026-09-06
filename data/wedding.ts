@@ -127,24 +127,17 @@ export const wedding = {
    *  degrades gracefully (the hero falls back to its poster image, the music
    *  control hides itself) instead of showing a broken element.
    *
-   *  ▸ Drop the couple's real files at these exact paths:
-   *      public/videos/wedding-hero.mp4         — hero film (muted, looping)
-   *      public/videos/wedding-hero-mobile.mp4  — optional smaller cut for phones
-   *      public/audio/wedding-music.mp3         — background music
+   *  ▸ The couple's own files, at these exact paths:
+   *      public/videos/wedding-video.mp4        — the film (muted, looping)
+   *      public/audio/music.mp3                 — the music
    *      public/images/couple.jpg               — the portrait
    *      public/images/wedding-hero-poster.jpg  — the film's first frame
    */
   media: {
-    heroVideo: "/videos/wedding-hero.mp4",
-    /**
-     * Optional. When this file exists it is used on narrow screens instead of
-     * the full-size cut — a 720p, heavily compressed version is plenty behind
-     * type, and saves a phone downloading a desktop-grade file.
-     */
-    heroVideoMobile: "/videos/wedding-hero-mobile.mp4",
+    heroVideo: "/videos/wedding-video.mp4",
     heroPoster: "/images/wedding-hero-poster.jpg",
     closingImage: "/images/closing.jpg",
-    audio: "/audio/wedding-music.mp3",
+    audio: "/audio/music.mp3",
     /** The single editorial portrait of the couple. */
     portrait: { src: "/images/couple.jpg", width: 1400, height: 1750 },
     ogImage: "/images/og-image.jpg",

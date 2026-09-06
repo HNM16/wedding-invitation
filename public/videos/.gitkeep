@@ -1,3 +1,11 @@
-Place the hero background film here as: wedding.mp4
-(H.264 / MP4, muted, ideally under ~8 MB and around 10-20 seconds, looping.)
-The site falls back to /public/images/hero-poster.jpg while this is absent.
+Place the hero film here as: wedding-video.mp4
+
+It is the background of the first section — full-bleed, muted, looping — and it
+is used again, paused until in view, behind the closing frame.
+
+H.264 / MP4. Around 10-20 seconds and under ~8 MB is plenty behind typography;
+the file is downloaded by every guest, most of them on a phone.
+
+Nothing is fetched or decoded while the envelope is still sealed. Until this
+file exists the hero shows public/images/wedding-hero-poster.jpg instead, and
+nothing breaks.
