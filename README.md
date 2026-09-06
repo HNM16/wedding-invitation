@@ -127,6 +127,15 @@ along with the one exception — `prefers-reduced-motion`, where a looping
 background film is exactly what the preference asks us not to run and the
 poster stands in.
 
+**A note on the music file.** Audio exported from a phone or an editor is very
+often AAC inside an MP4 container even when it is named `.mp3` — the file
+currently in the repository is exactly that. Chrome sniffs the bytes and plays
+it anyway; iOS Safari trusts the `Content-Type` and refuses, and most guests
+will open this on a phone. `next.config.ts` therefore reads the file's first
+bytes at build time and serves the correct type (`audio/mp4` here). Replace the
+file with a genuine MP3 and the same check will serve `audio/mpeg` instead —
+nothing needs editing either way.
+
 ## Typography
 
 The display face is **Solitude — Elegant Editorial Font** by rautanstudio. It is
