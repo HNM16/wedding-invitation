@@ -35,10 +35,12 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── Paper: the ground the whole invitation is printed on ─────────────── */
-  --color-paper: #f8f3e9; /* warm ivory — the page */
-  --color-cream: #f2e9d9; /* soft cream — raised panels */
-  --color-champagne: #e9dcc4; /* champagne — plates and fields */
+  /* ── Paper: the tones the invitation is printed on. The per-section bands
+        live in `lib/tones.ts`; these are the same family, exposed to Tailwind
+        for panels, fields and rules. ─────────────────────────────────────── */
+  --color-paper: #faf6ee; /* warm ivory — the base sheet */
+  --color-cream: #f5ecdc; /* soft cream — raised panels */
+  --color-champagne: #efe3ca; /* champagne — plates and fields */
   --color-linen: #ddcdb2; /* beige — rules and edges */
   --color-taupe: #b6a289; /* muted taupe — quiet detail */
 
@@ -212,7 +214,8 @@
   /* ── Printed plate: cream paper lifted off the page ───────────────────── */
   .plate {
     position: relative;
-    background-color: var(--color-cream);
+    /* Lighter than every paper tone, so it lifts off ivory and beige alike. */
+    background-color: #fdfaf2;
     box-shadow:
       0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
       0 30px 60px -32px rgba(74, 56, 34, 0.28),

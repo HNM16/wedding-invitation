@@ -36,7 +36,7 @@ export function Timeline() {
   const scaleY = useTransform(progress, [0, 1], [0, 1]);
 
   return (
-    <Section id="timeline" labelledBy="timeline-title">
+    <Section id="timeline" labelledBy="timeline-title" light="left">
       <SectionHeading
         id="timeline-title"
         eyebrow={t.timeline.eyebrow}

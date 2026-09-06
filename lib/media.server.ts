@@ -17,6 +17,8 @@ export function getMediaAvailability() {
 
   return {
     video: inPublic(wedding.media.heroVideo),
+    /** A smaller cut for phones; falls back to the full file when absent. */
+    videoMobile: inPublic(wedding.media.heroVideoMobile),
     audio: inPublic(wedding.media.audio),
   };
 }

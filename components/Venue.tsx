@@ -27,7 +27,7 @@ export function Venue() {
   ];
 
   return (
-    <Section id="venue" labelledBy="venue-title">
+    <Section id="venue" labelledBy="venue-title" light="right">
       <SectionHeading
         id="venue-title"
         eyebrow={t.venue.eyebrow}

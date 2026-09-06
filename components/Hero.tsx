@@ -7,18 +7,19 @@ import { useEffect, useRef, useState } from "react";
 import { DecorativeRing } from "@/components/ui/Decor";
 import wedding from "@/data/wedding";
 import { useGate } from "@/lib/gate";
-import { useMediaAvailability } from "@/lib/media";
+import { useHeroVideo } from "@/lib/hero-video";
 import { useI18n } from "@/lib/i18n";
+import { toneBand } from "@/lib/tones";
 import { EASE_EDITORIAL } from "@/lib/motion";
 
 /**
  * Fullscreen cinematic opening.
  *
  * Media strategy: the poster image is always painted first (it is the LCP
- * element and ships with `priority`), and the film — if the couple has added
- * `public/videos/wedding.mp4` — fades in on top once it can actually play.
- * With no video file present the hero is a still photograph, never a black
- * rectangle or a broken player.
+ * element and ships with `priority`), and the film fades in on top once it can
+ * actually play. `useHeroVideo` decides whether to play one at all and which
+ * cut to use — see the reasons there. Every "no" simply leaves the still
+ * photograph, never a black rectangle or a broken player.
  */
 export function Hero() {
   const { t, formatDate } = useI18n();
@@ -27,7 +28,7 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const { video: hasVideo } = useMediaAvailability();
+  const { src: videoSrc } = useHeroVideo();
   const [videoReady, setVideoReady] = useState(false);
 
   const { scrollYProgress } = useScroll({
@@ -45,13 +46,16 @@ export function Hero() {
      attribute; a refusal is fine — the poster stays. */
   useEffect(() => {
     const el = videoRef.current;
-    if (!el || !hasVideo) return;
+    if (!el || !videoSrc) return;
     const attempt = el.play();
     if (attempt) attempt.catch(() => undefined);
-  }, [hasVideo]);
+  }, [videoSrc]);
 
   const date = formatDate(wedding.date.day, wedding.date.month, wedding.date.year);
   const show = opened;
+  /* The hero settles into whatever tone the next section is printed on, so the
+     film joins the paper instead of stopping at an edge. */
+  const band = toneBand("hero");
 
   return (
     <section
@@ -81,12 +85,13 @@ export function Hero() {
             className="object-cover object-[50%_35%]"
           />
 
-          {hasVideo ? (
+          {videoSrc ? (
             <video
               ref={videoRef}
               className="absolute inset-0 h-full w-full object-cover object-[50%_35%] transition-opacity duration-[1600ms]"
               style={{ opacity: videoReady ? 1 : 0 }}
-              src={wedding.media.heroVideo}
+              key={videoSrc}
+              src={videoSrc}
               poster={wedding.media.heroPoster}
               autoPlay
               muted
@@ -118,8 +123,7 @@ export function Hero() {
         aria-hidden="true"
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(250,246,238,0.72) 0%, rgba(250,246,238,0.34) 22%, rgba(248,243,233,0.42) 58%, rgba(248,243,233,0.99) 100%)",
+          backgroundImage: `linear-gradient(180deg, ${band.tone}f2 0%, ${band.tone}57 22%, ${band.tone}6b 56%, ${band.to}f7 88%, ${band.to} 100%)`,
         }}
       />
       <div
@@ -135,7 +139,7 @@ export function Hero() {
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(112% 82% at 50% 44%, transparent 42%, rgba(236,224,200,0.75) 100%)",
+            "radial-gradient(112% 82% at 50% 44%, transparent 42%, rgba(232,216,188,0.8) 100%)",
         }}
       />
 

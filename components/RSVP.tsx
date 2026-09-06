@@ -138,7 +138,7 @@ export function RSVP() {
   const attending = values.attendance === "yes";
 
   return (
-    <Section id="rsvp" labelledBy="rsvp-title">
+    <Section id="rsvp" labelledBy="rsvp-title" light="right">
       <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
         {/* ── Heading column ───────────────────────────────────────────── */}
         <div className="lg:col-span-5 lg:pt-4">

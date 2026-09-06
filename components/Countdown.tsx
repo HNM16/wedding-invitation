@@ -40,7 +40,7 @@ export function Countdown() {
   ];
 
   return (
-    <Section id="countdown" labelledBy="countdown-title">
+    <Section id="countdown" labelledBy="countdown-title" light="top">
       <SectionHeading
         id="countdown-title"
         eyebrow={t.countdown.eyebrow}

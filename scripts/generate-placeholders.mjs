@@ -14,7 +14,7 @@ import { mkdir } from "node:fs/promises";
 const OUT = new URL("../public/images/", import.meta.url).pathname;
 
 const plates = [
-  { file: "hero-poster.jpg", w: 1920, h: 1080, caption: "hero-poster.jpg", glow: [0.42, 0.3], bleed: true },
+  { file: "wedding-hero-poster.jpg", w: 1920, h: 1080, caption: "wedding-hero-poster.jpg", glow: [0.42, 0.3], bleed: true },
   { file: "couple.jpg", w: 1400, h: 1750, caption: "couple.jpg", glow: [0.5, 0.34] },
   { file: "closing.jpg", w: 1920, h: 1200, caption: "closing.jpg", glow: [0.5, 0.28], bleed: true },
   { file: "og-image.jpg", w: 1200, h: 630, caption: null, glow: [0.5, 0.38], og: true },

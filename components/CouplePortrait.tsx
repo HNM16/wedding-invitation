@@ -30,7 +30,12 @@ export function CouplePortrait() {
   const portrait = wedding.media.portrait;
 
   return (
-    <Section id="couple" labelledBy="couple-title" className="overflow-hidden">
+    <Section
+      id="couple"
+      labelledBy="couple-title"
+      className="overflow-hidden"
+      light="left"
+    >
       <div className="flex flex-col items-center">
         <Reveal duration={1.1}>
           <DecorativeRing className="h-7 w-11 text-gold/70" />

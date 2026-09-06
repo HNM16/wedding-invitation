@@ -55,8 +55,9 @@ build error rather than a blank space on the page.
 
 | Drop the file at | What it does if missing |
 | --- | --- |
-| `public/videos/wedding.mp4` | Hero plays the poster still instead. Nothing breaks, no request is made. |
-| `public/audio/clarity-roie-shpigler.mp3` | **Not in the repo** — "Clarity" by Roie Shpigler is licensed music, so it has to be added by hand. Until it is, the floating music control does not render and the envelope opens silently. |
+| `public/videos/wedding-hero.mp4` | Hero plays the poster still instead. Nothing breaks, no request is made. |
+| `public/videos/wedding-hero-mobile.mp4` | Optional. A smaller, heavily compressed cut used on screens under 768px; phones fall back to the full file when it is absent. |
+| `public/audio/wedding-music.mp3` | **Not in the repo.** See *Music* below. Until it is added the floating music control does not render and the envelope opens silently. |
 | `public/images/couple.jpg`, `hero-poster.jpg`, `closing.jpg`, `og-image.jpg` | Elegant placeholders ship in the repo and are already in place — overwrite them at the same paths. |
 | `public/fonts/Solitude.woff2` | The site sets in Cormorant Garamond — see *Typography*. |
 
@@ -101,6 +102,49 @@ it again, load the page with `#replay` in the URL, or call
 Under `prefers-reduced-motion` the whole sequence collapses into a short fade —
 the tap is still required, so the music still starts.
 
+## Music
+
+The track is not bundled, because nothing may be shipped here without a licence
+that actually covers it. Add your own copy at `public/audio/wedding-music.mp3`.
+
+Something romantic, cinematic and soft suits the invitation best — solo piano,
+or piano with light strings — at a level that sits under the page rather than
+performing over it. Two sources whose licences allow this use:
+
+- **[Pixabay Music](https://pixabay.com/music/search/wedding%20piano/)** — the
+  Pixabay Content Licence permits commercial and non-commercial use with no
+  attribution required. The simplest option.
+- **[Free Stock Music](https://www.free-stock-music.com/piano.html)** — largely
+  CC BY 4.0, which is free to use but *does* require crediting the composer
+  somewhere on the page.
+
+Do not rip the track from a streaming site or lift the audio from another
+wedding website; neither is licensed for this.
+
+The music starts on the guest's tap to open the envelope — that gesture is what
+lets a browser begin audio at all — and the floating control takes over from
+there.
+
+## The hero film
+
+Add the couple's film at `public/videos/wedding-hero.mp4`, with its first frame
+at `public/images/wedding-hero-poster.jpg`.
+
+The poster is always painted and is the LCP element; the film fades in over it
+only once it can play. `lib/hero-video.ts` decides whether to play one at all,
+and every "no" simply leaves the still photograph:
+
+- no file → nothing to play;
+- `prefers-reduced-motion` → a looping film is what that preference asks us not
+  to run;
+- Save-Data, or a 2g/3g connection → a guest on a metered phone should not be
+  made to download a background video;
+- a screen under 768px with `wedding-hero-mobile.mp4` present → the smaller cut.
+
+The server always renders "poster only" and the client opts in after mount, so
+hydration stays silent and nobody downloads a video before we know it is
+welcome.
+
 ## Typography
 
 The display face is **Solitude — Elegant Editorial Font** by rautanstudio. It is
@@ -121,17 +165,46 @@ actually draw those letters, so they drop to a system fallback mid-word.
 
 ---
 
-## Palette
+## Palette and paper tones
 
-The invitation is printed on ivory, not staged in the dark: warm paper, cream
-plates, champagne rules and antique gold. Gold is used only for headings,
-numbers, ornaments and borders; body copy is warm brown ink so it stays
-readable. All tokens live at the top of `app/globals.css`.
+The invitation is printed on warm paper, not staged in the dark — and not on
+one sheet. Each section has its own tone, and every band blends into the two
+beside it, so the page reads as one continuous invitation rather than a stack
+of coloured blocks.
 
-One thing to watch when editing gold: `.gold-leaf` is a gradient clipped to the
-glyphs, and on a light ground the pale highlights that read as metal on black
-simply vanish. The gradient keeps a narrow bright band between deeper stops for
-that reason — lightening it overall makes the text disappear rather than shine.
+`lib/tones.ts` is the single source of truth: it holds the four papers and the
+order the sections are printed in.
+
+| Section | Tone | |
+| --- | --- | --- |
+| hero | ivory | the film settles into the countdown's champagne |
+| countdown | champagne | where gold has the most to react against |
+| invitation | ivory | back to the base sheet for the longest read |
+| couple | beige | the deepest paper, behind the photograph |
+| venue | cream | |
+| timeline | champagne | |
+| rsvp | ivory | so the white form plate lifts off it |
+| closing | beige | |
+
+`Section` reads its band from that table and paints
+`prev → own → next` as one long vertical wash, so a change of paper happens
+across the whole section and never on a hard line. Reordering sections in
+`app/page.tsx` means reordering the table too — they must agree.
+
+Two things worth knowing before editing:
+
+- `light` on `<Section>` places a soft pool of warm light (top / left / right)
+  so each sheet is lit differently. Keep it faint: a stronger pool washes the
+  paper back toward ivory and the section stops reading as its own tone.
+- `.plate` is deliberately lighter than *every* paper in the family rather than
+  a fixed cream, so a raised card lifts off ivory and beige alike.
+
+Gold is used only for headings, numbers, ornaments and borders; body copy is
+warm brown ink so it stays readable. One thing to watch: `.gold-leaf` is a
+gradient clipped to the glyphs, and on a light ground the pale highlights that
+read as metal on black simply vanish. The gradient keeps a narrow bright band
+between deeper stops for that reason — lightening it overall makes the text
+disappear rather than shine.
 
 ## Languages
 

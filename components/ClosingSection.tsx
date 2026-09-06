@@ -9,6 +9,7 @@ import { FloralOrnament } from "@/components/ui/Decor";
 import { MaskedLine, Reveal } from "@/components/ui/Reveal";
 import wedding from "@/data/wedding";
 import { useI18n } from "@/lib/i18n";
+import { toneBand } from "@/lib/tones";
 
 /**
  * The last frame: a full-bleed photograph sunk almost to black, the names in
@@ -26,6 +27,7 @@ export function ClosingSection() {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
   const scale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
+  const band = toneBand("closing");
 
   return (
     <section
@@ -62,8 +64,7 @@ export function ClosingSection() {
         aria-hidden="true"
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(248,243,233,0.99) 0%, rgba(248,243,233,0.62) 26%, rgba(250,246,238,0.7) 68%, rgba(248,243,233,0.99) 100%)",
+          backgroundImage: `linear-gradient(180deg, ${band.from} 0%, ${band.from}c4 16%, ${band.tone}9e 46%, ${band.tone}e8 78%, ${band.tone} 100%)`,
         }}
       />
       <div
@@ -79,7 +80,7 @@ export function ClosingSection() {
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(100% 74% at 50% 50%, transparent 42%, rgba(224,208,178,0.8) 100%)",
+            "radial-gradient(100% 74% at 50% 50%, transparent 42%, rgba(220,202,170,0.85) 100%)",
         }}
       />
 

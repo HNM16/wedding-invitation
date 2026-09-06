@@ -16,7 +16,7 @@ export function InvitationMessage() {
   const [lead, ...rest] = t.invitation.paragraphs;
 
   return (
-    <Section id="invitation" labelledBy="invitation-title">
+    <Section id="invitation" labelledBy="invitation-title" light="top">
       {/* Pool of light */}
       <div
         aria-hidden="true"

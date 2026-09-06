@@ -128,21 +128,23 @@ export const wedding = {
    *  control hides itself) instead of showing a broken element.
    *
    *  ▸ Drop the couple's real files at these exact paths:
-   *      public/videos/wedding.mp4                  — hero film (muted, looping)
-   *      public/audio/clarity-roie-shpigler.mp3     — "Clarity", Roie Shpigler
-   *      public/images/couple.jpg                   — the portrait
+   *      public/videos/wedding-hero.mp4         — hero film (muted, looping)
+   *      public/videos/wedding-hero-mobile.mp4  — optional smaller cut for phones
+   *      public/audio/wedding-music.mp3         — background music
+   *      public/images/couple.jpg               — the portrait
+   *      public/images/wedding-hero-poster.jpg  — the film's first frame
    */
-  /** Shown quietly beside the music control. */
-  music: {
-    title: "Clarity",
-    artist: "Roie Shpigler",
-  },
-
   media: {
-    heroVideo: "/videos/wedding.mp4",
-    heroPoster: "/images/hero-poster.jpg",
+    heroVideo: "/videos/wedding-hero.mp4",
+    /**
+     * Optional. When this file exists it is used on narrow screens instead of
+     * the full-size cut — a 720p, heavily compressed version is plenty behind
+     * type, and saves a phone downloading a desktop-grade file.
+     */
+    heroVideoMobile: "/videos/wedding-hero-mobile.mp4",
+    heroPoster: "/images/wedding-hero-poster.jpg",
     closingImage: "/images/closing.jpg",
-    audio: "/audio/clarity-roie-shpigler.mp3",
+    audio: "/audio/wedding-music.mp3",
     /** The single editorial portrait of the couple. */
     portrait: { src: "/images/couple.jpg", width: 1400, height: 1750 },
     ogImage: "/images/og-image.jpg",
